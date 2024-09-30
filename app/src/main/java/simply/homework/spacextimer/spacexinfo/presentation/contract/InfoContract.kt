@@ -9,18 +9,26 @@ class InfoContract {
     sealed class Event : ViewEvent {
         data class InfoItemClick(val infoItem: DomainInfoItem) : Event()
         data class InfoItemDetailsClick(val infoItem: DomainInfoItem) : Event()
+        data object StartSelectedItemCountdownTime : Event()
     }
 
     data class State(
         val domainInfoItems: List<DomainInfoItem>,
+        val isLoading: Boolean = false,
         val selectedEventTimerValue: Long,
+        val selectedEvent: DomainInfoItem? = domainInfoItems.firstOrNull()
     ) : ViewState {
         companion object {
-            val INITIAL = State(domainInfoItems = emptyList(), selectedEventTimerValue = 0L)
+            val INITIAL = State(
+                domainInfoItems = emptyList(),
+                selectedEventTimerValue = 0L,
+                selectedEvent = null
+            )
         }
     }
 
     sealed class Effect : ViewEffect {
-        // don't need implementation for now
+        data class NavigateToDetails(val infoItem: DomainInfoItem) : Effect()
+        data object StartSelectedItemCountdownTime : Effect()
     }
 }

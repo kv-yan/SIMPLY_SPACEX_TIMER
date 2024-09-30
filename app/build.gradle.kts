@@ -75,7 +75,7 @@ dependencies {
 
     // retrofit
     implementation (libs.retrofit)
-    
+
     // converter
     implementation (libs.converter.gson)
 
@@ -84,4 +84,7 @@ dependencies {
 
     //coil
     implementation (libs.coil.compose)
+
+    // navigation
+    implementation(libs.androidx.navigation.compose)
 }

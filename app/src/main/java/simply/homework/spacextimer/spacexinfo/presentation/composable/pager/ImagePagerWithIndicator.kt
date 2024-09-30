@@ -1,4 +1,4 @@
-package simply.homework.spacextimer.spacexinfo.presentation.comp.pager
+package simply.homework.spacextimer.spacexinfo.presentation.composable.pager
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

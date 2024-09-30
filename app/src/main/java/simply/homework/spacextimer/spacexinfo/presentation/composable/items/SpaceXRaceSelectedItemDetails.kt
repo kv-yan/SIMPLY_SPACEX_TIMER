@@ -1,4 +1,4 @@
-package simply.homework.spacextimer.spacexinfo.presentation.comp.items
+package simply.homework.spacextimer.spacexinfo.presentation.composable.items
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,19 +17,20 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import simply.homework.spacextimer.commonpresentation.ui.theme.spacexFontFamily
 import simply.homework.spacextimer.spacexinfo.data.ext.appendItemNameAndDescription
 import simply.homework.spacextimer.spacexinfo.domain.model.DomainInfoItem
+import simply.homework.spacextimer.spacexinfo.presentation.composable.timer.TakeoffTimer
+import simply.homework.spacextimer.spacexinfo.presentation.contract.InfoContract
+import simply.homework.spacextimer.spacexinfo.presentation.viewmodel.SpaceXInfoMVIViewModel
 
 @Composable
 fun SpaceXRaceSelectedItemDetails(
-    selectedItem: DomainInfoItem, remainingTimerValue: String = "17:48:59"
+    viewModel: SpaceXInfoMVIViewModel, selectedItem: DomainInfoItem, remainingTimerValue: Long
 ) {
+
+    viewModel.setEvent(InfoContract.Event.StartSelectedItemCountdownTime)
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,15 +64,7 @@ fun SpaceXRaceSelectedItemDetails(
                 ) {
                     Column {
                         // Timer Text in the center
-                        Text(
-                            modifier = Modifier.fillMaxWidth(),
-                            text = remainingTimerValue,
-                            fontSize = 36.sp,
-                            fontFamily = spacexFontFamily,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
-                        )
+                        TakeoffTimer(remainingTimeMillis = remainingTimerValue)
                     }
                 }
             }

@@ -1,5 +1,6 @@
-package simply.homework.spacextimer.spacexinfo.presentation.comp.items
+package simply.homework.spacextimer.spacexinfo.presentation.composable.items
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,33 +16,39 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import simply.homework.spacextimer.spacexinfo.domain.model.DomainInfoItem
-import simply.homework.spacextimer.spacexinfo.presentation.comp.pager.ImagePagerWithIndicator
+import simply.homework.spacextimer.spacexinfo.presentation.composable.pager.ImagePagerWithIndicator
 
 @Composable
-fun SpaceXRaceItem(item: DomainInfoItem) {
+fun SpaceXRaceItem(
+    item: DomainInfoItem,
+    onItemClick: (DomainInfoItem) -> Unit,
+    onDetailsClick: (DomainInfoItem) -> Unit
+) {
 
     Surface(
+        shape = RoundedCornerShape(16.dp),
+        color = Color.DarkGray.copy(alpha = 0.5f),
+        onClick = { onItemClick(item) },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
-        shape = RoundedCornerShape(16.dp),
-        color = Color.DarkGray.copy(alpha = 0.5f)
+            .padding(16.dp)
     ) {
         Column {
             ImagePagerWithIndicator(imageUrls = item.flickr_images)
 
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = item.name,
                     color = Color.White,
                     fontSize = 12.sp,
-                    modifier = Modifier.padding(4.dp)
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .weight(0.8f)
                 )
                 Text(
                     text = "Details",
@@ -51,6 +58,10 @@ fun SpaceXRaceItem(item: DomainInfoItem) {
                     modifier = Modifier
                         .padding(4.dp)
                         .fillMaxWidth()
+                        .weight(0.2f)
+                        .clickable {
+                            onDetailsClick(item)
+                        }
                 )
             }
         }

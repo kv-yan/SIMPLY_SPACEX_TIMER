@@ -42,13 +42,18 @@ class SpaceXInfoMVIViewModel(
             InfoContract.Event.StartSelectedItemCountdownTime -> {
                 startCountdownForSelectedItem() // Start the timer for the selected item
             }
+
+            InfoContract.Event.ReturnBackFromDetailScreen -> {
+                setEffect { InfoContract.Effect.ReturnBackFromDetailScreen }
+            }
         }
     }
 
     private fun updateStateWithTimer(
         infos: List<DomainInfoItem>, upcomingFlightDate: Calendar?
     ) {
-        viewState.value.selectedEventTimerValue.value = upcomingFlightDate?.timeInMillis ?: 259200000L
+        viewState.value.selectedEventTimerValue.value =
+            upcomingFlightDate?.timeInMillis ?: 259200000L
         setState {
 //
             viewState.value.copy(
@@ -85,6 +90,7 @@ class SpaceXInfoMVIViewModel(
 
     private fun onItemDetailsClicked(infoItem: DomainInfoItem) {
         setState { viewState.value.copy(selectedEvent = infoItem) }
+        setEffect { InfoContract.Effect.NavigateToDetails(infoItem) }
     }
 
     override fun setInitialState() = InfoContract.State.INITIAL

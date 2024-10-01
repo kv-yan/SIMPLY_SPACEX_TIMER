@@ -12,6 +12,7 @@ class InfoContract {
     sealed class Event : ViewEvent {
         data class InfoItemClick(val infoItem: DomainInfoItem) : Event()
         data class InfoItemDetailsClick(val infoItem: DomainInfoItem) : Event()
+        data object ReturnBackFromDetailScreen : Event()
         data object StartSelectedItemCountdownTime : Event()
     }
 
@@ -32,5 +33,6 @@ class InfoContract {
 
     sealed class Effect : ViewEffect {
         data class NavigateToDetails(val infoItem: DomainInfoItem) : Effect()
+        data object ReturnBackFromDetailScreen : Effect()
     }
 }

@@ -34,7 +34,7 @@ fun SpaceXRaceItem(
             .padding(16.dp)
     ) {
         Column {
-            ImagePagerWithIndicator(imageUrls = item.flickr_images)
+            ImagePagerWithIndicator(imageUrls = item.flickr_images, modifier = Modifier)
 
             Row(
                 modifier = Modifier

@@ -24,11 +24,11 @@ import com.google.accompanist.pager.rememberPagerState
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun ImagePagerWithIndicator(imageUrls: List<String>) {
+fun ImagePagerWithIndicator(imageUrls: List<String>, modifier: Modifier = Modifier) {
     val pagerState = rememberPagerState()
 
     Column(
-        modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // HorizontalPager for images
         HorizontalPager(

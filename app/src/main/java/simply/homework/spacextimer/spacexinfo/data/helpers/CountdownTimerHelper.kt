@@ -14,6 +14,5 @@ class CountdownTimerHelperImpl : CountdownTimerHelper {
             delay(1000L) // Wait for 1 second
             remainingTime -= 1000L // Decrease by 1000ms (1 second)
         }
-        println("CountdownTimer Timer finished!")
     }
 }

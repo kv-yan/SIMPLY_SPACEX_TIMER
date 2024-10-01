@@ -25,6 +25,10 @@ fun AppNavGraph(
                 is InfoContract.Effect.NavigateToDetails -> {
                     navController.navigate(ScreensUIState.SPACEX_DETAILS_SCREEN.route)
                 }
+
+                InfoContract.Effect.ReturnBackFromDetailScreen -> {
+                    navController.popBackStack()
+                }
             }
         }
     }

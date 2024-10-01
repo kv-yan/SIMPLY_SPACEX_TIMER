@@ -10,32 +10,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import simply.homework.spacextimer.commonpresentation.ui.theme.spacexFontFamily
+import simply.homework.spacextimer.spacexinfo.data.ext.countTime
 import java.util.concurrent.TimeUnit
 
 @Composable
-fun TakeoffTimer(timeMillis: MutableState<Long>) {
-    val remainingTime = timeMillis.value
-    val years = TimeUnit.MILLISECONDS.toDays(remainingTime) / 365
-    val months = (TimeUnit.MILLISECONDS.toDays(remainingTime) % 365) / 30
-    val days = (TimeUnit.MILLISECONDS.toDays(remainingTime) % 365) % 30
-    val hours = (TimeUnit.MILLISECONDS.toHours(remainingTime) % 24)
-    val minutes = (TimeUnit.MILLISECONDS.toMinutes(remainingTime) % 60)
-    val seconds = (TimeUnit.MILLISECONDS.toSeconds(remainingTime) % 60)
-
-    // Build the countdown string based on non-zero values
-    val countdownString = buildString {
-        if (years > 0) append("${years}y,")
-        if (months > 0) append("${months}m:,")
-        if (days > 0) append("${days}d:")
-        if (hours > 0) append("${hours}h:")
-        if (minutes > 0) append("${minutes}m:")
-        append("${seconds}s")
-    }.trimEnd(':', ' ')
-
-    println("Countdown: $countdownString")
+fun TakeoffTimer(
+    timeMillis: MutableState<Long>
+) {
+    val countdownString = timeMillis.countTime()
 
     Text(
-        text = countdownString, modifier = Modifier.fillMaxWidth(), fontSize = 36.sp,
+        text = countdownString,
+        modifier = Modifier.fillMaxWidth(),
+        fontSize = 36.sp,
         fontFamily = spacexFontFamily,
         color = Color.White,
         fontWeight = FontWeight.Bold,

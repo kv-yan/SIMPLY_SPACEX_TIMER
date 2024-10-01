@@ -75,7 +75,8 @@ fun SpaceXRaceSelectedItemDetails(
             Text(
                 text = buildAnnotatedString {
                     appendItemNameAndDescription(
-                        name = selectedItem.name, description = selectedItem.description
+                        name = selectedItem.name,
+                        description = "${selectedItem.company}\nFirst flight:${selectedItem.first_flight}"
                     )
                 }, modifier = Modifier.padding(4.dp)
             )

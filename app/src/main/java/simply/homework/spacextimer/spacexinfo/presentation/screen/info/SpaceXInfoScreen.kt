@@ -3,6 +3,7 @@ package simply.homework.spacextimer.spacexinfo.presentation.screen.info
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,15 +27,14 @@ fun SpaceXInfoScreen(
 
     LazyColumn(modifier = modifier.fillMaxSize()) {
 
-        item(key = "selected_item") {
+        stickyHeader(key = "selected_item") {
             if (selectedItem != null) {
-                Surface(modifier = Modifier.animateItemPlacement()) {
+                Surface(modifier = Modifier.fillMaxWidth()) {
                     SpaceXRaceSelectedItemDetails(
                         selectedItem = selectedItem,
                         remainingTimerValue = remainingTimerValue,
                         viewModel = viewModel
                     )
-
                 }
             }
         }

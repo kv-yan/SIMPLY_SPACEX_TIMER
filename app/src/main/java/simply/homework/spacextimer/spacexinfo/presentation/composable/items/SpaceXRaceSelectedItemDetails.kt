@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -27,7 +28,9 @@ import simply.homework.spacextimer.spacexinfo.presentation.viewmodel.SpaceXInfoM
 
 @Composable
 fun SpaceXRaceSelectedItemDetails(
-    viewModel: SpaceXInfoMVIViewModel, selectedItem: DomainInfoItem, remainingTimerValue: Long
+    viewModel: SpaceXInfoMVIViewModel,
+    selectedItem: DomainInfoItem,
+    remainingTimerValue: MutableState<Long>
 ) {
 
     viewModel.setEvent(InfoContract.Event.StartSelectedItemCountdownTime)
@@ -42,7 +45,7 @@ fun SpaceXRaceSelectedItemDetails(
             ) {
                 // Image with Coil
                 Image(
-                    painter = rememberAsyncImagePainter(model = selectedItem.flickr_images.random()),
+                    painter = rememberAsyncImagePainter(model = selectedItem.flickr_images.first()),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -64,7 +67,7 @@ fun SpaceXRaceSelectedItemDetails(
                 ) {
                     Column {
                         // Timer Text in the center
-                        TakeoffTimer(remainingTimeMillis = remainingTimerValue)
+                        TakeoffTimer(timeMillis = remainingTimerValue)
                     }
                 }
             }

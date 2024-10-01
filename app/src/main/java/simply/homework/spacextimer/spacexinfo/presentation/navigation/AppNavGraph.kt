@@ -7,8 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import simply.homework.spacextimer.spacexinfo.presentation.model.ScreensUIState
 import simply.homework.spacextimer.spacexinfo.presentation.contract.InfoContract
+import simply.homework.spacextimer.spacexinfo.presentation.model.ScreensUIState
 import simply.homework.spacextimer.spacexinfo.presentation.screen.details.SpaceXDetailsScreen
 import simply.homework.spacextimer.spacexinfo.presentation.screen.info.SpaceXInfoScreen
 import simply.homework.spacextimer.spacexinfo.presentation.viewmodel.SpaceXInfoMVIViewModel
@@ -24,10 +24,6 @@ fun AppNavGraph(
             when (effect) {
                 is InfoContract.Effect.NavigateToDetails -> {
                     navController.navigate(ScreensUIState.SPACEX_DETAILS_SCREEN.route)
-                }
-
-                is InfoContract.Effect.StartSelectedItemCountdownTime -> {
-                    viewModel.startCountdownTimerForSelectedItem()
                 }
             }
         }

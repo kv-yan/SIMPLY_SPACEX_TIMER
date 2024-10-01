@@ -8,14 +8,12 @@ interface CountdownTimerHelper {
 
 class CountdownTimerHelperImpl : CountdownTimerHelper {
     override suspend fun startCountdownTimer(upcomingFlightTime: Long, onUpdate: (Long) -> Unit) {
-        while (true) {
-            val remainingTime = upcomingFlightTime - System.currentTimeMillis()
-            if (remainingTime <= 0) {
-                println("CountdownTimer Timer finished!")
-                break
-            }
+        var remainingTime = upcomingFlightTime
+        while (remainingTime > 0) {
             onUpdate(remainingTime) // Update the remaining time
-            delay(1000L)
+            delay(1000L) // Wait for 1 second
+            remainingTime -= 1000L // Decrease by 1000ms (1 second)
         }
+        println("CountdownTimer Timer finished!")
     }
 }

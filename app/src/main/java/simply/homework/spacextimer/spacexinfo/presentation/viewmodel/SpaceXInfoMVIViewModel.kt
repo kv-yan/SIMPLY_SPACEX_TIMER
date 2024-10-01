@@ -1,6 +1,7 @@
 package simply.homework.spacextimer.spacexinfo.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import simply.homework.spacextimer.spacexinfo.data.helpers.CountdownTimerHelper
 import simply.homework.spacextimer.spacexinfo.data.helpers.FlightDateHelper
@@ -17,6 +18,8 @@ class SpaceXInfoMVIViewModel(
     private val countdownTimerHelper: CountdownTimerHelper
 ) : BaseViewModel<InfoContract.Event, InfoContract.State, InfoContract.Effect>() {
 
+    private var countdownJob: Job? = null // Add a Job to control the timer
+
     init {
         viewModelScope.launch {
             val infos = getInfoUseCase.invoke()
@@ -27,78 +30,63 @@ class SpaceXInfoMVIViewModel(
             }
 
             updateStateWithTimer(infos, upcomingFlightDate)
-            upcomingFlightDate?.let {
-                countdownTimerHelper.startCountdownTimer(it.timeInMillis) { remainingTime ->
-                    updateRemainingTime(remainingTime)
-                }
-            }
+
+            startCountdownForSelectedItem() // Start the countdown on initialization
         }
     }
-
-    private fun updateStateWithTimer(
-        infos: List<DomainInfoItem>,
-        upcomingFlightDate: Calendar?
-    ) {
-        setState {
-            viewState.value.copy(
-                domainInfoItems = infos,
-                selectedEvent = infos.firstOrNull(),
-                selectedEventTimerValue = upcomingFlightDate?.timeInMillis ?: 0L
-            )
-        }
-    }
-
-    private fun updateRemainingTime(remainingTime: Long) {
-        setState {
-            viewState.value.copy(selectedEventTimerValue = remainingTime)
-        }
-    }
-
-    fun startCountdownTimerForSelectedItem() {
-        viewModelScope.launch {
-            val item = viewState.value.selectedEvent
-            val upcomingFlightTime = item?.first_flight?.let {
-                flightDateHelper.calculateUpcomingFlightDate(
-                    it,
-                    viewState.value.domainInfoItems.indexOf(item)
-                ).timeInMillis
-            }
-            val remainingTime = upcomingFlightTime?.minus(System.currentTimeMillis())
-
-            if (remainingTime != null) {
-                if (remainingTime > 0) {
-                    countdownTimerHelper.startCountdownTimer(remainingTime) { remaining ->
-                        updateRemainingTime(remaining)
-                    }
-                }
-            }
-        }
-    }
-
-    override fun setInitialState() = InfoContract.State.INITIAL
 
     override fun handleEvents(event: InfoContract.Event) {
         when (event) {
             is InfoContract.Event.InfoItemClick -> onItemClicked(event.infoItem)
             is InfoContract.Event.InfoItemDetailsClick -> onItemDetailsClicked(event.infoItem)
             InfoContract.Event.StartSelectedItemCountdownTime -> {
-                startCountdownTimerForSelectedItem()
-                setEffect { InfoContract.Effect.StartSelectedItemCountdownTime }
+                startCountdownForSelectedItem() // Start the timer for the selected item
+            }
+        }
+    }
+
+    private fun updateStateWithTimer(
+        infos: List<DomainInfoItem>, upcomingFlightDate: Calendar?
+    ) {
+        viewState.value.selectedEventTimerValue.value = upcomingFlightDate?.timeInMillis ?: 259200000L
+        setState {
+//
+            viewState.value.copy(
+                domainInfoItems = infos,
+                selectedEvent = infos.firstOrNull(), // 3 days
+            )
+        }
+    }
+
+    private fun updateRemainingTime(remainingTime: Long) {
+        viewState.value.selectedEventTimerValue.value = remainingTime
+    }
+
+    private fun startCountdownForSelectedItem() {
+        countdownJob?.cancel() // Cancel the previous timer if it's running
+        countdownJob = viewModelScope.launch {
+            // Start the countdown from 3 days (259200000 ms)
+            countdownTimerHelper.startCountdownTimer(viewState.value.selectedEventTimerValue.value) { remaining ->
+                updateRemainingTime(remaining)
             }
         }
     }
 
     private fun onItemClicked(infoItem: DomainInfoItem) {
+        viewState.value.selectedEventTimerValue.value = 259200000L // 3 days in milliseconds
         setState {
             viewState.value.copy(
-                selectedEventTimerValue = 259200000, // 3 days in milliseconds
-                selectedEvent = infoItem
+                selectedEvent = infoItem,
+                selectedEventTimerValue = viewState.value.selectedEventTimerValue
             )
         }
+        startCountdownForSelectedItem() // Start the timer for the new selected item
     }
 
     private fun onItemDetailsClicked(infoItem: DomainInfoItem) {
         setState { viewState.value.copy(selectedEvent = infoItem) }
     }
+
+    override fun setInitialState() = InfoContract.State.INITIAL
 }
 

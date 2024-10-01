@@ -58,6 +58,7 @@ class SpaceXInfoMVIViewModel(
 //
             viewState.value.copy(
                 domainInfoItems = infos,
+                isLoading = false,
                 selectedEvent = infos.firstOrNull(), // 3 days
             )
         }

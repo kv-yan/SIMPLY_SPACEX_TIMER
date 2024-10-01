@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "symply.homework.spacextimer"
+    namespace = "simply.homework.spacextimer"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "symply.homework.spacextimer"
+        applicationId = "simply.homework.spacextimer"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

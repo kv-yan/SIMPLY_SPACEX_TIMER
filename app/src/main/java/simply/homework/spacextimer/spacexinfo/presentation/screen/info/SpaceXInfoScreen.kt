@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import simply.homework.spacextimer.spacexinfo.presentation.composable.items.SpaceXRaceItem
 import simply.homework.spacextimer.spacexinfo.presentation.composable.items.SpaceXRaceSelectedItemDetails
 import simply.homework.spacextimer.spacexinfo.presentation.contract.InfoContract
+import simply.homework.spacextimer.spacexinfo.presentation.loading.SpaceXLoading
 import simply.homework.spacextimer.spacexinfo.presentation.viewmodel.SpaceXInfoMVIViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -24,38 +25,40 @@ fun SpaceXInfoScreen(
 
     val selectedItem = viewModel.viewState.value.selectedEvent
     val remainingTimerValue = viewModel.viewState.value.selectedEventTimerValue
+    val isLoading = viewModel.viewState.value.isLoading
 
-    LazyColumn(modifier = modifier.fillMaxSize()) {
-
-        stickyHeader(key = "selected_item") {
-            if (selectedItem != null) {
-                Surface(modifier = Modifier.fillMaxWidth()) {
-                    SpaceXRaceSelectedItemDetails(
-                        selectedItem = selectedItem,
-                        remainingTimerValue = remainingTimerValue,
-                        viewModel = viewModel
-                    )
+    if (isLoading) {
+        SpaceXLoading()
+    } else {
+        LazyColumn(modifier = modifier.fillMaxSize()) {
+            stickyHeader(key = "selected_item") {
+                if (selectedItem != null) {
+                    Surface(modifier = Modifier.fillMaxWidth()) {
+                        SpaceXRaceSelectedItemDetails(
+                            selectedItem = selectedItem,
+                            remainingTimerValue = remainingTimerValue,
+                            viewModel = viewModel
+                        )
+                    }
                 }
+            }
+
+
+            items(viewModel.viewState.value.domainInfoItems, key = { it.id }) {
+                SpaceXRaceItem(item = it, onItemClick = { item ->
+                    viewModel.setEvent(InfoContract.Event.InfoItemClick(item))
+                }, onDetailsClick = { item ->
+                    viewModel.setEvent(InfoContract.Event.InfoItemDetailsClick(item))
+                })
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(36.dp))
             }
         }
 
-
-        items(viewModel.viewState.value.domainInfoItems, key = { it.id }) {
-            SpaceXRaceItem(
-                item = it,
-                onItemClick = { item ->
-                    viewModel.setEvent(InfoContract.Event.InfoItemClick(item))
-                },
-                onDetailsClick = { item ->
-                    viewModel.setEvent(InfoContract.Event.InfoItemDetailsClick(item))
-                }
-            )
-        }
-
-        item {
-            Spacer(modifier = Modifier.height(36.dp))
-        }
     }
+
 }
 
 

@@ -36,7 +36,7 @@ private val LightColorScheme = lightColorScheme(
 val spacexFontFamily = FontFamily.Monospace
 
 @Composable
-fun SYMPLY_SPACEX_TIMERTheme(
+fun SIMPLY_SPACEX_TIMERTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

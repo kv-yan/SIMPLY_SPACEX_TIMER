@@ -10,7 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import org.koin.androidx.compose.koinViewModel
-import simply.homework.spacextimer.commonpresentation.ui.theme.SYMPLY_SPACEX_TIMERTheme
+import simply.homework.spacextimer.commonpresentation.ui.theme.SIMPLY_SPACEX_TIMERTheme
 import simply.homework.spacextimer.spacexinfo.presentation.navigation.AppNavGraph
 import simply.homework.spacextimer.spacexinfo.presentation.viewmodel.SpaceXInfoMVIViewModel
 
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             enableEdgeToEdge()
-            SYMPLY_SPACEX_TIMERTheme {
+            SIMPLY_SPACEX_TIMERTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val viewModel: SpaceXInfoMVIViewModel = koinViewModel()
                     val navController = rememberNavController()

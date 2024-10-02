@@ -8,16 +8,18 @@ import simply.homework.spacextimer.spacexinfo.data.helpers.FlightDateHelper
 import simply.homework.spacextimer.spacexinfo.domain.model.Rocket
 import simply.homework.spacextimer.spacexinfo.domain.usecase.GetRocketDetailsUseCase
 import simply.homework.spacextimer.spacexinfo.domain.usecase.GetRocketsUseCase
+import simply.homework.spacextimer.spacexinfo.domain.usecase.OpenLinkUseCase
 import simply.homework.spacextimer.spacexinfo.presentation.contract.InfoContract
 import java.util.Calendar
 
-private const val TAG = "SpaceXInfoMVIViewModel"
 
 class SpaceXInfoMVIViewModel(
     private val getRocketsUseCase: GetRocketsUseCase,
     private val getRocketDetailsUseCase: GetRocketDetailsUseCase,
     private val flightDateHelper: FlightDateHelper,
-    private val countdownTimerHelper: CountdownTimerHelper
+    private val countdownTimerHelper: CountdownTimerHelper,
+    private val openLinkUseCase: OpenLinkUseCase
+
 ) : BaseViewModel<InfoContract.Event, InfoContract.State, InfoContract.Effect>() {
 
     private var countdownJob: Job? = null // Add a Job to control the timer
@@ -25,8 +27,9 @@ class SpaceXInfoMVIViewModel(
     init {
         viewModelScope.launch {
             val infos = getRocketsUseCase.invoke()
+            val selectedRocket = viewState.value.selectedEvent.value
 
-            val selectedInfoItem = viewState.value.selectedEvent.takeIf {
+            val selectedInfoItem = selectedRocket.takeIf {
                 it?.id == infos.firstOrNull()?.id
             }
 
@@ -40,9 +43,17 @@ class SpaceXInfoMVIViewModel(
     }
 
     override fun handleEvents(event: InfoContract.Event) {
+
         when (event) {
             is InfoContract.Event.InfoItemClick -> onItemClicked(event.rocket)
             is InfoContract.Event.InfoItemDetailsClick -> onItemDetailsClicked(event.rocket)
+            is InfoContract.Event.WikipediaButtonClick -> {
+                val url = viewState.value.selectedEvent.value?.wikipedia
+                if (url != null) {
+                    openLink(url)
+                }
+            }
+
             InfoContract.Event.StartSelectedItemCountdownTime -> {
                 startCountdownForSelectedItem()
             }
@@ -50,6 +61,7 @@ class SpaceXInfoMVIViewModel(
             InfoContract.Event.ReturnBackFromDetailScreen -> {
                 setEffect { InfoContract.Effect.ReturnBackFromDetailScreen }
             }
+
         }
     }
 
@@ -80,11 +92,12 @@ class SpaceXInfoMVIViewModel(
 
     private fun onItemClicked(infoItem: Rocket) {
         viewModelScope.launch {
+            val selectedRocket = viewState.value.selectedEvent
             viewState.value.selectedEventTimerValue.value = 259200000L // 3 days in milliseconds
             val rocketDetails = getRocketDetailsUseCase.invoke(infoItem.id)
             setState {
+                selectedRocket.value = rocketDetails
                 viewState.value.copy(
-                    selectedEvent = rocketDetails,// and set here
                     selectedEventTimerValue = viewState.value.selectedEventTimerValue
                 )
             }
@@ -92,25 +105,23 @@ class SpaceXInfoMVIViewModel(
         }
     }
 
-    fun getRocketDetails(rocketId: String) {
+    private fun getRocketDetails(rocketId: String) {
         viewModelScope.launch {
-            // Set the loading state to true before fetching the details
             setState {
                 viewState.value.copy(isLoading = true)
             }
 
-            // Get the rocket details from the use case
             val rocketDetailsResult = getRocketDetailsUseCase.invoke(rocketId)
 
-            // Find the existing image list from the rockets
-            val existingImages = viewState.value.rockets.find { it.id == rocketId }?.imageList.orEmpty()
+            val existingImages =
+                viewState.value.rockets.find { it.id == rocketId }?.imageList.orEmpty()
 
-            // Create a new rocketDetails object, ensuring it's updated with the existing images
-            val updatedRocketDetails = rocketDetailsResult?.copy(flickr_images = existingImages)
+            val updatedRocketDetails = rocketDetailsResult?.copy(flickrImages = existingImages)
 
-            // Update the state with the fetched rocket details and stop the loading
             setState {
-                viewState.value.copy(selectedEvent = updatedRocketDetails, isLoading = false)
+                val selectedRocket = viewState.value.selectedEvent
+                selectedRocket.value = updatedRocketDetails
+                viewState.value.copy(isLoading = false)
             }
         }
     }
@@ -118,12 +129,21 @@ class SpaceXInfoMVIViewModel(
     private fun onItemDetailsClicked(infoItem: Rocket) {
         viewModelScope.launch {
             val rocketDetails = getRocketDetailsUseCase.invoke(infoItem.id)
+            val selectedRocket = viewState.value.selectedEvent
+            selectedRocket.value = rocketDetails
 
-            setState { viewState.value.copy(selectedEvent = rocketDetails) }
+            getRocketDetails(infoItem.id)
+
             setEffect { InfoContract.Effect.NavigateToDetails(rocketDetails) }
         }
     }
 
     override fun setInitialState() = InfoContract.State.INITIAL
+
+    private fun openLink(url: String) {
+        viewModelScope.launch {
+            openLinkUseCase.invoke(url)
+        }
+    }
 }
 

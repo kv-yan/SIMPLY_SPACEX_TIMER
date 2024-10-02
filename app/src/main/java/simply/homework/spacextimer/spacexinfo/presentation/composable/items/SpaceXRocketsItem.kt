@@ -1,6 +1,6 @@
 package simply.homework.spacextimer.spacexinfo.presentation.composable.items
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,14 +16,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import simply.homework.spacextimer.spacexinfo.domain.model.Rocket
-import simply.homework.spacextimer.spacexinfo.domain.model.RocketImage
 import simply.homework.spacextimer.spacexinfo.presentation.composable.pager.ImagePagerWithIndicator
 
 @Composable
-fun SpaceXRaceItem(
-    item: Rocket,
-    onItemClick: (Rocket) -> Unit,
-    onDetailsClick: (Rocket) -> Unit
+fun SpaceXRocketsItem(
+    item: Rocket, onItemClick: (Rocket) -> Unit, onDetailsClick: (Rocket) -> Unit
 ) {
 
     Surface(
@@ -46,24 +43,22 @@ fun SpaceXRaceItem(
                 Text(
                     text = item.name,
                     color = Color.White,
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
                     modifier = Modifier
                         .padding(4.dp)
-                        .weight(0.8f)
                 )
-                Text(
-                    text = "Details",
-                    color = Color.Cyan,
-                    fontSize = 12.sp,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .fillMaxWidth()
-                        .weight(0.2f)
-                        .clickable {
-                            onDetailsClick(item)
-                        }
-                )
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
+                    Surface(onClick = { onDetailsClick(item) } , color = Color.Transparent, shape = RoundedCornerShape(12.dp) ) {
+                        Text(
+                            text = "Details",
+                            color = Color.Cyan,
+                            fontSize = 12.sp,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier.padding(4.dp)
+                        )
+
+                    }
+                }
             }
         }
     }

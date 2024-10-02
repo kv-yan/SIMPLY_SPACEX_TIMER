@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name="simply.homework.spacextimer.SpaceXInfoApp"
+        android:name="simply.homework.spacextimer.SpaceXRocketsApp"
         android:theme="@style/Theme.SIMPLY_SPACEX_TIMER"
         tools:targetApi="31">
         <activity

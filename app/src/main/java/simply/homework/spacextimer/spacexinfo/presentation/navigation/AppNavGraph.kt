@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import simply.homework.spacextimer.spacexinfo.presentation.contract.InfoContract
 import simply.homework.spacextimer.spacexinfo.presentation.model.ScreensUIState
 import simply.homework.spacextimer.spacexinfo.presentation.screen.details.SpaceXDetailsScreen
-import simply.homework.spacextimer.spacexinfo.presentation.screen.info.SpaceXInfoScreen
+import simply.homework.spacextimer.spacexinfo.presentation.screen.rockets.SpaceXRocketsScreen
 import simply.homework.spacextimer.spacexinfo.presentation.viewmodel.SpaceXInfoMVIViewModel
 
 @Composable
@@ -35,17 +35,28 @@ fun AppNavGraph(
 
 
     NavHost(
-        navController = navController,
-        startDestination = ScreensUIState.SPACEX_DETAILS_SCREEN.route
+        navController = navController, startDestination = ScreensUIState.SPACEX_ROCKETS_SCREEN.route
     ) {
 
         // SPACEX Info list screen
-        composable(ScreensUIState.SPACEX_INFO_SCREEN.route) {
-            SpaceXInfoScreen(viewModel = viewModel, modifier = modifier)
+        composable(
+            ScreensUIState.SPACEX_ROCKETS_SCREEN.route,
+            enterTransition = null,
+            exitTransition = null,
+            popEnterTransition = null,
+            popExitTransition = null
+        ) {
+            SpaceXRocketsScreen(viewModel = viewModel, modifier = modifier)
         }
 
         // Details screen
-        composable(ScreensUIState.SPACEX_DETAILS_SCREEN.route) {
+        composable(
+            ScreensUIState.SPACEX_DETAILS_SCREEN.route,
+            enterTransition = null,
+            exitTransition = null,
+            popEnterTransition = null,
+            popExitTransition = null
+        ) {
             SpaceXDetailsScreen(modifier = modifier.fillMaxSize(), viewModel = viewModel)
         }
     }

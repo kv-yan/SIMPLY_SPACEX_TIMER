@@ -4,7 +4,7 @@ data class RocketDetails(
     val id: String,
     val name: String,
     val company: String,
-    val flickr_images: List<String> = emptyList(),
+    val flickrImages: List<String> = emptyList(),
     val country: String,
     val description: String,
     val firstFlight: String,

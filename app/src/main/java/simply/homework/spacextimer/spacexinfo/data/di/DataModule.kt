@@ -10,9 +10,11 @@ import simply.homework.spacextimer.spacexinfo.data.helpers.FlightDateHelperImpl
 import simply.homework.spacextimer.spacexinfo.data.repo.GetRocketDetailsRepoImpl
 import simply.homework.spacextimer.spacexinfo.data.repo.GetRocketImagesRepoImpl
 import simply.homework.spacextimer.spacexinfo.data.repo.GetRocketsRepoImpl
+import simply.homework.spacextimer.spacexinfo.data.repo.LinkRepositoryImpl
 import simply.homework.spacextimer.spacexinfo.domain.repo.GetRocketDetailsRepo
 import simply.homework.spacextimer.spacexinfo.domain.repo.GetRocketImagesRepo
 import simply.homework.spacextimer.spacexinfo.domain.repo.GetRocketsRepo
+import simply.homework.spacextimer.spacexinfo.domain.repo.LinkRepository
 
 
 val dataModule = module {
@@ -21,6 +23,5 @@ val dataModule = module {
     factoryOf(::CountdownTimerHelperImpl) { bind<CountdownTimerHelper>() }
     factoryOf(::GetRocketsRepoImpl) { bind<GetRocketsRepo>() }
     factoryOf(::GetRocketDetailsRepoImpl) { bind<GetRocketDetailsRepo>() }
-
-
+    factoryOf(::LinkRepositoryImpl) { bind<LinkRepository>() }
 }

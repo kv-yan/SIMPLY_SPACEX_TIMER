@@ -5,12 +5,10 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-// Interface for Date Calculation Helper
 interface FlightDateHelper {
     fun calculateUpcomingFlightDate(firstFlight: String, index: Int): Calendar
 }
 
-// Implementation for FlightDateHelper
 class FlightDateHelperImpl : FlightDateHelper {
     override fun calculateUpcomingFlightDate(firstFlight: String, index: Int): Calendar {
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

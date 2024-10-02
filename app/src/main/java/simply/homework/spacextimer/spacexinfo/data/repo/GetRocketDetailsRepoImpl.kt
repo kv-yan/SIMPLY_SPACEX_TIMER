@@ -11,7 +11,7 @@ import simply.homework.spacextimer.spacexinfo.domain.repo.GetRocketDetailsRepo
 private const val TAG = "GetRocketDetailsImpl"
 
 class GetRocketDetailsRepoImpl(
-    private val apolloInstance: ApolloInstance
+    apolloInstance: ApolloInstance
 ) : GetRocketDetailsRepo {
     private val apolloClient =apolloInstance.apolloClient
 

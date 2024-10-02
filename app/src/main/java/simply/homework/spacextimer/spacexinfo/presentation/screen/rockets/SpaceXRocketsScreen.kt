@@ -1,4 +1,4 @@
-package simply.homework.spacextimer.spacexinfo.presentation.screen.info
+package simply.homework.spacextimer.spacexinfo.presentation.screen.rockets
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Spacer
@@ -10,20 +10,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import simply.homework.spacextimer.spacexinfo.presentation.composable.items.SpaceXRaceItem
 import simply.homework.spacextimer.spacexinfo.presentation.composable.items.SpaceXRaceSelectedItemDetails
+import simply.homework.spacextimer.spacexinfo.presentation.composable.items.SpaceXRocketsItem
 import simply.homework.spacextimer.spacexinfo.presentation.contract.InfoContract
 import simply.homework.spacextimer.spacexinfo.presentation.loading.SpaceXLoading
 import simply.homework.spacextimer.spacexinfo.presentation.viewmodel.SpaceXInfoMVIViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @androidx.compose.runtime.Composable
-fun SpaceXInfoScreen(
+fun SpaceXRocketsScreen(
     modifier: Modifier = Modifier,
     viewModel: SpaceXInfoMVIViewModel,
 ) {
 
-    val selectedItem = viewModel.viewState.value.selectedEvent
+    val selectedItem = viewModel.viewState.value.selectedEvent.value
     val remainingTimerValue = viewModel.viewState.value.selectedEventTimerValue
     val isLoading = viewModel.viewState.value.isLoading
 
@@ -45,7 +45,7 @@ fun SpaceXInfoScreen(
 
 
             items(viewModel.viewState.value.rockets, key = { it.id }) {
-                SpaceXRaceItem(item = it, onItemClick = { item ->
+                SpaceXRocketsItem(item = it, onItemClick = { item ->
                     viewModel.setEvent(InfoContract.Event.InfoItemClick(item))
                 }, onDetailsClick = { item ->
                     viewModel.setEvent(InfoContract.Event.InfoItemDetailsClick(item))
@@ -56,9 +56,7 @@ fun SpaceXInfoScreen(
                 Spacer(modifier = Modifier.height(36.dp))
             }
         }
-
     }
-
 }
 
 

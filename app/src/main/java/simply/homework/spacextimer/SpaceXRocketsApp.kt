@@ -7,11 +7,11 @@ import simply.homework.spacextimer.spacexinfo.data.di.dataModule
 import simply.homework.spacextimer.spacexinfo.domain.di.domainModule
 import simply.homework.spacextimer.spacexinfo.presentation.di.presentationModule
 
-class SpaceXInfoApp : Application() {
+class SpaceXRocketsApp : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            androidContext(this@SpaceXInfoApp)
+            androidContext(this@SpaceXRocketsApp)
             modules(presentationModule, domainModule, dataModule)
         }
     }

@@ -12,14 +12,16 @@ import simply.homework.spacextimer.spacexinfo.domain.usecase.GetRocketDetailsUse
 import simply.homework.spacextimer.spacexinfo.domain.usecase.GetRocketImages
 import simply.homework.spacextimer.spacexinfo.domain.usecase.GetRocketsUseCase
 import simply.homework.spacextimer.spacexinfo.domain.usecase.GetRocketsUseCaseImpl
+import simply.homework.spacextimer.spacexinfo.domain.usecase.OpenLinkUseCase
+import simply.homework.spacextimer.spacexinfo.domain.usecase.OpenLinkUseCaseImpl
 
 
 val domainModule = module {
     factoryOf(::GetInfoUseCaseImpl) { bind<GetRocketImages>() }
     factoryOf(::GetRocketsUseCaseImpl) { bind<GetRocketsUseCase>() }
     factoryOf(::GetRocketDetailsUseCaseImpl) { bind<GetRocketDetailsUseCase>() }
+    factoryOf(::OpenLinkUseCaseImpl) { bind<OpenLinkUseCase>() }
 
     single<RocketImagesApi> { RetrofitInstance.api }
-
     single<ApolloInstance> { ApolloInstance }
 }

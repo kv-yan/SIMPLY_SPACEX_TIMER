@@ -17,19 +17,17 @@ import simply.homework.spacextimer.R
 @Composable
 fun SpaceXLoading() {
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()
     ) {
-        val composition = rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim))
+        val composition =
+            rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim))
         val progress = animateLottieCompositionAsState(
             composition.value, iterations = LottieConstants.IterateForever
         )
 
-        LottieAnimation(
-            composition = composition.value,
-            progress = {
-                progress.value
-            })
+        LottieAnimation(composition = composition.value, progress = {
+            progress.value
+        })
     }
 }
 

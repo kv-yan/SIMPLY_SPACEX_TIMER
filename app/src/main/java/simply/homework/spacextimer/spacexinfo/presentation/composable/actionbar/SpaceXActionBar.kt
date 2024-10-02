@@ -19,6 +19,30 @@ import androidx.compose.ui.unit.dp
 fun SpaceXActionBar(
     modifier: Modifier = Modifier,
     title: String,
+    icon: ImageVector,
+    onIconClick: () -> Unit
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shadowElevation = 4.dp
+    ) {
+        Row(modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            IconButton(onClick = { onIconClick() }) {
+                Icon(imageVector = icon, contentDescription = null)
+            }
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Text(text = title)
+        }
+    }
+}
+
+
+@Composable
+fun SpaceXActionBar(
+    modifier: Modifier = Modifier,
+    title: String,
     icon: Int,
     onIconClick: () -> Unit
 ) {
@@ -38,25 +62,3 @@ fun SpaceXActionBar(
     }
 }
 
-@Composable
-fun SpaceXActionBar(
-    modifier: Modifier = Modifier,
-    title: String,
-    icon: ImageVector,
-    onIconClick: () -> Unit
-) {
-    Surface(
-        modifier = modifier.fillMaxWidth(),
-        shadowElevation = 4.dp
-    ) {
-        Row(modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = { onIconClick() }) {
-                Icon(imageVector = icon, contentDescription = null)
-            }
-
-            Spacer(modifier = Modifier.width(4.dp))
-
-            Text(text = title)
-        }
-    }
-}

@@ -1,6 +1,5 @@
 package simply.homework.spacextimer.spacexinfo.presentation.composable.items
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,10 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import simply.homework.spacextimer.spacexinfo.data.ext.appendItemNameAndDescription
 import simply.homework.spacextimer.spacexinfo.domain.model.RocketDetails
 import simply.homework.spacextimer.spacexinfo.presentation.composable.timer.TakeoffTimer
@@ -44,14 +41,16 @@ fun SpaceXRaceSelectedItemDetails(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 // Image with Coil
-                Image(
-                    painter = rememberAsyncImagePainter(model = selectedItem.flickr_images.firstOrNull()),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16 / 9f),
-                    contentScale = ContentScale.Crop
-                )
+                /*
+                                Image(
+                                    painter = rememberAsyncImagePainter(model = selectedItem.flickr_images.firstOrNull()),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .aspectRatio(16 / 9f),
+                                    contentScale = ContentScale.Crop
+                                )
+                */
 
                 Box(
                     modifier = Modifier
@@ -76,6 +75,7 @@ fun SpaceXRaceSelectedItemDetails(
                 text = buildAnnotatedString {
                     appendItemNameAndDescription(
                         name = selectedItem.name,
+                        isShowingTimer = false,
                         description = "${selectedItem.company}\nFirst flight:${selectedItem.firstFlight}"
                     )
                 }, modifier = Modifier.padding(4.dp)

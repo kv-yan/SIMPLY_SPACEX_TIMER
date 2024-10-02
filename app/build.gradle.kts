@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.apollographql.apollo") version "4.0.1"
+
 }
 
 android {
@@ -87,4 +89,13 @@ dependencies {
 
     // navigation
     implementation(libs.androidx.navigation.compose)
+
+    // apollo
+    implementation(libs.apollo.runtime)
+}
+apollo {
+    service("service") {
+        packageName.set("simply.homework")
+        schemaFile.set(file("src/main/graphql/simply/homework/schema.graphqls"))
+    }
 }

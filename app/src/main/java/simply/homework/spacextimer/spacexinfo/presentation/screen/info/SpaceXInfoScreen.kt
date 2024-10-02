@@ -44,7 +44,7 @@ fun SpaceXInfoScreen(
             }
 
 
-            items(viewModel.viewState.value.domainInfoItems, key = { it.id }) {
+            items(viewModel.viewState.value.rockets, key = { it.id }) {
                 SpaceXRaceItem(item = it, onItemClick = { item ->
                     viewModel.setEvent(InfoContract.Event.InfoItemClick(item))
                 }, onDetailsClick = { item ->

@@ -36,7 +36,7 @@ fun AppNavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = ScreensUIState.SPACEX_INFO_SCREEN.route
+        startDestination = ScreensUIState.SPACEX_DETAILS_SCREEN.route
     ) {
 
         // SPACEX Info list screen

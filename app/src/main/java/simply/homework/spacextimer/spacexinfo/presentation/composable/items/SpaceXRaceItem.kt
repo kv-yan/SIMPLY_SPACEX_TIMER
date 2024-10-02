@@ -15,14 +15,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import simply.homework.spacextimer.spacexinfo.domain.model.DomainInfoItem
+import simply.homework.spacextimer.spacexinfo.domain.model.Rocket
+import simply.homework.spacextimer.spacexinfo.domain.model.RocketImage
 import simply.homework.spacextimer.spacexinfo.presentation.composable.pager.ImagePagerWithIndicator
 
 @Composable
 fun SpaceXRaceItem(
-    item: DomainInfoItem,
-    onItemClick: (DomainInfoItem) -> Unit,
-    onDetailsClick: (DomainInfoItem) -> Unit
+    item: Rocket,
+    onItemClick: (Rocket) -> Unit,
+    onDetailsClick: (Rocket) -> Unit
 ) {
 
     Surface(
@@ -34,7 +35,7 @@ fun SpaceXRaceItem(
             .padding(16.dp)
     ) {
         Column {
-            ImagePagerWithIndicator(imageUrls = item.flickr_images, modifier = Modifier)
+            ImagePagerWithIndicator(imageUrls = item.imageList, modifier = Modifier)
 
             Row(
                 modifier = Modifier

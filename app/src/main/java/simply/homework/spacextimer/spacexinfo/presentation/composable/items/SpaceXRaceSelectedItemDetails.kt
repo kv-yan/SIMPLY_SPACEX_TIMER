@@ -21,7 +21,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import simply.homework.spacextimer.spacexinfo.data.ext.appendItemNameAndDescription
-import simply.homework.spacextimer.spacexinfo.domain.model.DomainInfoItem
+import simply.homework.spacextimer.spacexinfo.domain.model.RocketDetails
 import simply.homework.spacextimer.spacexinfo.presentation.composable.timer.TakeoffTimer
 import simply.homework.spacextimer.spacexinfo.presentation.contract.InfoContract
 import simply.homework.spacextimer.spacexinfo.presentation.viewmodel.SpaceXInfoMVIViewModel
@@ -29,7 +29,7 @@ import simply.homework.spacextimer.spacexinfo.presentation.viewmodel.SpaceXInfoM
 @Composable
 fun SpaceXRaceSelectedItemDetails(
     viewModel: SpaceXInfoMVIViewModel,
-    selectedItem: DomainInfoItem,
+    selectedItem: RocketDetails,
     remainingTimerValue: MutableState<Long>
 ) {
 
@@ -45,7 +45,7 @@ fun SpaceXRaceSelectedItemDetails(
             ) {
                 // Image with Coil
                 Image(
-                    painter = rememberAsyncImagePainter(model = selectedItem.flickr_images.first()),
+                    painter = rememberAsyncImagePainter(model = selectedItem.flickr_images.firstOrNull()),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -76,7 +76,7 @@ fun SpaceXRaceSelectedItemDetails(
                 text = buildAnnotatedString {
                     appendItemNameAndDescription(
                         name = selectedItem.name,
-                        description = "${selectedItem.company}\nFirst flight:${selectedItem.first_flight}"
+                        description = "${selectedItem.company}\nFirst flight:${selectedItem.firstFlight}"
                     )
                 }, modifier = Modifier.padding(4.dp)
             )

@@ -1,4 +1,4 @@
-SimplyIntershipSpaceXProject - Made with Clipchamp
+SimplyIntershipSpaceXProject
 
 
 # SpaceX Rockets App 🚀

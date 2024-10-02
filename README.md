@@ -36,7 +36,7 @@ This project follows **Clean Architecture** and **SOLID** design principles, spl
 
 ### Layers:
 - **Domain Layer**: Business logic, including use cases and domain models.
-- **Data Layer**: Handles data operations, including network (via Retrofit/GraphQL) and local storage (via Room).
+- **Data Layer**: Handles data operations, including network (via Retrofit/GraphQL).
 - **Presentation Layer**: View models and UI components (Jetpack Compose), adhering to the MVI pattern.
 
 ### Flow:
